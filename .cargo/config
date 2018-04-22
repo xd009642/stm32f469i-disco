@@ -5,7 +5,7 @@ target = "thumbv7em-none-eabihf"
 runner = 'arm-none-eabi-gdb'
 rustflags = [
     "-C", "link-arg=-Tlink.x",
-    "-C", "lld",
+    "-C", "linker=lld",
     "-Z", "linker-flavor=ld.lld",
     "-Z", "thinlto=no",
 ]

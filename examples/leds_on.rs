@@ -1,5 +1,4 @@
 #![no_std]
-
 extern crate embedded_hal;
 extern crate stm32f469xx_hal as hal;
 
