@@ -2,7 +2,7 @@
 #![no_main]
 #![feature(panic_implementation)]
 #![feature(used)]
-#![feature(core_intrinsics)]
+#![feature(asm)]
 extern crate embedded_hal;
 extern crate stm32f469xx_hal as hal;
 #[macro_use(entry, exception)]
