@@ -17,3 +17,6 @@ nb = "0.1.1"
 
 [dependencies.cortex-m-rt]
 version = "0.5.1"
+
+[dev-dependencies]
+panic-abort = "0.2.0"

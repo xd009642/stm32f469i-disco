@@ -7,12 +7,12 @@ extern crate embedded_hal;
 extern crate stm32f469xx_hal as hal;
 #[macro_use(entry, exception)]
 extern crate cortex_m_rt;
+extern crate cortex_m;
+extern crate panic_abort;
 
 use cortex_m_rt::ExceptionFrame;
 
 use embedded_hal::digital::OutputPin;
-use core::intrinsics;
-use core::panic::PanicInfo;
 use hal::stm32f469xx;
 use hal::gpio::*;
 
@@ -58,10 +58,3 @@ fn main() -> ! {
         }
     }
 }
-
-#[no_mangle]
-#[panic_implementation]
-pub fn panic(_info: &PanicInfo) -> ! {
-    unsafe { intrinsics::abort() }
-}
-
