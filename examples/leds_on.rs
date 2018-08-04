@@ -15,6 +15,7 @@ use cortex_m_rt::ExceptionFrame;
 use embedded_hal::digital::OutputPin;
 use hal::stm32f469xx;
 use hal::gpio::*;
+use hal::rcc::*;
 
 entry!(main);
 exception!(HardFault, safe_state);
@@ -28,9 +29,10 @@ fn safe_state(_ef: &ExceptionFrame) -> ! {
 
 fn main() -> ! {
     let p = stm32f469xx::Peripherals::take().unwrap();
-    let gpiog = p.GPIOG.split();
-    let gpiok = p.GPIOK.split();
-    let gpiod = p.GPIOD.split();
+    let mut rcc = p.RCC.constrain();
+    let gpiog = p.GPIOG.split(&mut rcc.ahb1);
+    let gpiok = p.GPIOK.split(&mut rcc.ahb1);
+    let gpiod = p.GPIOD.split(&mut rcc.ahb1);
     let mut led1 = gpiog.pg6.into_output_pushpull().downgrade();
     let mut led2 = gpiod.pd4.into_output_pushpull().downgrade();
     let mut led3 = gpiod.pd5.into_output_pushpull().downgrade();
