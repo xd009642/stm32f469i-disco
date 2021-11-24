@@ -5,14 +5,15 @@
 #![feature(asm)]
 extern crate embedded_hal;
 extern crate stm32f469xx_hal as hal;
+extern crate stm32f469i_disco as bsp;
 #[macro_use(entry, exception)]
 extern crate cortex_m_rt;
 extern crate cortex_m;
 extern crate panic_abort;
 
-use cortex_m_rt::ExceptionFrame;
 
-use embedded_hal::digital::OutputPin;
+use cortex_m_rt::ExceptionFrame;
+use bsp::leds::Led;
 use hal::stm32f469xx;
 use hal::gpio::*;
 use hal::rcc::*;
@@ -33,30 +34,30 @@ fn main() -> ! {
     let gpiog = p.GPIOG.split(&mut rcc.ahb1);
     let gpiok = p.GPIOK.split(&mut rcc.ahb1);
     let gpiod = p.GPIOD.split(&mut rcc.ahb1);
-    let mut led1 = gpiog.pg6.into_output_pushpull().downgrade();
-    let mut led2 = gpiod.pd4.into_output_pushpull().downgrade();
-    let mut led3 = gpiod.pd5.into_output_pushpull().downgrade();
-    let mut led4 = gpiok.pk3.into_output_pushpull().downgrade();
+    let mut led1 = Led::Led1(gpiog.pg6.into_output_pushpull());
+    let mut led2 = Led::Led2(gpiod.pd4.into_output_pushpull());
+    let mut led3 = Led::Led3(gpiod.pd5.into_output_pushpull());
+    let mut led4 = Led::Led4(gpiok.pk3.into_output_pushpull());
     
     // Turn on PG6 PD4 PD5 PK3
     loop {   
         for _i in 1..10000 {
-            led1.set_low();
+            led1.off();
             // Orange led
-            led2.set_high();
+            led2.off();
             // Red
-            led3.set_high();
-            led4.set_low();
+            led3.on();
+            led4.on();
         }
 
         for _i in 1..10000 {
-            led1.set_high();
+            led1.on();
             // Orange led
-            led2.set_low();
+            led2.on();
             // Red
-            led3.set_low();
+            led3.off();
 
-            led4.set_high();
+            led4.off();
         }
     }
 }
