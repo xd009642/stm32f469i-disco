@@ -1,11 +1,22 @@
 [package]
 name = "stm32f469i-disco"
+description = "Board level crate for STM32F469I discovery board"
 version = "0.1.0"
 authors = ["xd009642 <danielmckenna93@gmail.com>"]
+license = "MIT/Apache-2.0"
+readme = "README.md"
+keywords = ["embedded-hal", "hal", "stm32f4", "no_std", "cortex-m"]
+repository = "https://github.com/xd009642/stm32f469i-disco.git"
 
 [dependencies]
-cortex-m = "0.4.3"
-stm32f469xx = "0.1.0"
-stm32f469xx-hal = { git = "https://github.com/xd009642/stm32f469xx-hal" }
-embedded-hal = "0.1.2"
+cortex-m = "0.5.7"
+stm32f469xx = { version="0.3.0", features = ["rt"] }
+stm32f469xx-hal = { git = "https://github.com/xd009642/stm32f469xx-hal", branch = "develop" }
+embedded-hal = "0.2.1"
 nb = "0.1.1"
+
+[dependencies.cortex-m-rt]
+version = "0.6.3"
+
+[dev-dependencies]
+panic-abort = "0.3.1"
